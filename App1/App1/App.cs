@@ -41,7 +41,7 @@ namespace App1 {
                }
             };
             //更新 ("xamarin"という文字列を検索する)
-            Refresh("furuya02");
+            Refresh("xamarin");
         }
 
         //セル用のテンプレート
@@ -52,23 +52,23 @@ namespace App1 {
                 var icon = new Image();
                 icon.WidthRequest = icon.HeightRequest = 50;//アイコンのサイズ
                 icon.VerticalOptions = LayoutOptions.Start;//アイコンを行の上に詰めて表示
-                icon.SetBinding(Image.SourceProperty, "Icon");
+                icon.SetBinding<Tweet>(Image.SourceProperty, x=>x.Icon);
                 
                 //名前
                 var name = new Label{Font = Font.SystemFontOfSize(12)};
-                name.SetBinding(Label.TextProperty, "Name");
-                
+                name.SetBinding<Tweet>(Label.TextProperty, x=>x.Name);
+
                 //アカウント名
                 var screenName = new Label{Font = Font.SystemFontOfSize(12)};
-                screenName.SetBinding(Label.TextProperty, "ScreenName");
+                screenName.SetBinding<Tweet>(Label.TextProperty, x=>x.ScreenName);
 
                 //作成日時
                 var createAt = new Label{Font = Font.SystemFontOfSize(8),TextColor = Color.Gray};
-                createAt.SetBinding(Label.TextProperty, "CreatedAt");
+                createAt.SetBinding<Tweet>(Label.TextProperty, x=>x.CreatedAt);
 
                 //メッセージ本文
                 var text = new Label{Font = Font.SystemFontOfSize(10)};
-                text.SetBinding(Label.TextProperty, "Text");
+                text.SetBinding<Tweet>(Label.TextProperty, x=>x.Text);
 
                 //名前行
                 var layoutName = new StackLayout {
