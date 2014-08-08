@@ -164,7 +164,7 @@ Global
 		{BB47A20C-E3D8-4871-80D9-4EC2A1C356AE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = App1\App1.Android\App1.Android.csproj
+		StartupItem = App1\App1.iOS\App1.iOS.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

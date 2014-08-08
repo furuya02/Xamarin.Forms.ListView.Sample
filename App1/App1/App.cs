@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using LinqToTwitter;
 using Xamarin.Forms;
 
 namespace App1 {
@@ -106,28 +105,20 @@ namespace App1 {
 
         private async void Refresh(string searchString) {
             //認証
-            var auth = new ApplicationOnlyAuthorizer() {
-                CredentialStore = new InMemoryCredentialStore {
-                    ConsumerKey = "{API Key}",
-                    ConsumerSecret = "{API secret}",
-                },
-            };
-            await auth.AuthorizeAsync();
-            //コンテキストの作成
-            var context = new TwitterContext(auth);
-            var response = await (from search in context.Search
-                            where search.Type == SearchType.Search &&
-                                  search.Query == searchString &&
-                                  search.Count == 30
-                            select search).SingleOrDefaultAsync();
-            //取得データの解釈
-            foreach (var a in response.Statuses) {
+            var tokens = await CoreTweet.OAuth2.GetTokenAsync(
+                "{API Key}", 
+                "{API secret}");
+            var responces = await tokens.Search.TweetsAsync(
+                new { q = searchString, count = 30});
+
+            foreach (var a in responces)
+            {
                 _tweets.Add(new Tweet {
                     Text = a.Text,
                     Name = a.User.Name,
-                    ScreenName = a.User.ScreenNameResponse,
+                    ScreenName = a.User.ScreenName,
                     CreatedAt = a.CreatedAt.ToString("f"),
-                    Icon = a.User.ProfileImageUrl
+                    Icon = a.User.ProfileImageUrl.ToString()
                 });
             }
         }
